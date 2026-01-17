@@ -1165,6 +1165,7 @@ const SupplierDashboard = () => {
             
             <div>
               <Label className="mb-2 block">Assign to Parent SKUs:</Label>
+              <p className="text-xs text-blue-600 mb-2">ℹ️ Selecting a parent SKU will automatically apply the document to all its components</p>
               <div className="max-h-32 overflow-y-auto border rounded-lg p-2 space-y-1">
                 {parts.map(part => (
                   <div key={part.id} className="flex items-center gap-2">
@@ -1179,14 +1180,17 @@ const SupplierDashboard = () => {
                         }
                       }}
                     />
-                    <Label htmlFor={`doc-part-${part.id}`} className="text-sm">{part.sku} - {part.name}</Label>
+                    <Label htmlFor={`doc-part-${part.id}`} className="text-sm">
+                      {part.sku} - {part.name}
+                      <span className="text-xs text-gray-400 ml-1">({part.child_parts?.length || 0} components)</span>
+                    </Label>
                   </div>
                 ))}
               </div>
             </div>
 
             <div>
-              <Label className="mb-2 block">Assign to Components:</Label>
+              <Label className="mb-2 block">Or assign to specific Components:</Label>
               <div className="max-h-40 overflow-y-auto border rounded-lg p-2 space-y-2">
                 {parts.map(part => (
                   <div key={part.id}>
@@ -1195,7 +1199,8 @@ const SupplierDashboard = () => {
                       <div key={child.id} className="flex items-center gap-2 ml-4">
                         <Checkbox
                           id={`doc-child-${child.id}`}
-                          checked={selectedDocChildren.includes(child.id)}
+                          checked={selectedDocChildren.includes(child.id) || selectedDocParts.includes(part.id)}
+                          disabled={selectedDocParts.includes(part.id)}
                           onCheckedChange={(checked) => {
                             if (checked) {
                               setSelectedDocChildren([...selectedDocChildren, child.id]);
@@ -1204,7 +1209,13 @@ const SupplierDashboard = () => {
                             }
                           }}
                         />
-                        <Label htmlFor={`doc-child-${child.id}`} className="text-sm">{child.identifier}</Label>
+                        <Label 
+                          htmlFor={`doc-child-${child.id}`} 
+                          className={`text-sm ${selectedDocParts.includes(part.id) ? 'text-gray-400' : ''}`}
+                        >
+                          {child.identifier}
+                          {selectedDocParts.includes(part.id) && <span className="text-xs text-blue-500 ml-1">(via parent)</span>}
+                        </Label>
                       </div>
                     ))}
                   </div>
