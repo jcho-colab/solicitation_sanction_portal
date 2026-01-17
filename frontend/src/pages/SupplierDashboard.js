@@ -237,21 +237,25 @@ const SupplierDashboard = () => {
   };
 
   const handleExcelImport = async () => {
-    if (!uploadFile) return;
+    if (!excelFile) return;
+    setImporting(true);
+    setShowConfirmImport(false);
     try {
-      const response = await importExportAPI.importExcel(uploadFile);
+      const response = await importExportAPI.importExcel(excelFile);
       setImportResults(response.data);
-      setSuccess('Import completed');
+      setSuccess(`Import completed! ${response.data.created_parents + response.data.updated_parents} parent(s) and ${response.data.created_children + response.data.updated_children} component(s) processed.`);
       fetchData();
     } catch (err) {
-      setError(err.response?.data?.detail || 'Import failed');
+      setError(err.response?.data?.detail || 'Import failed. Please check your file format.');
+    } finally {
+      setImporting(false);
     }
   };
 
   const handleDocUpload = async () => {
-    if (!uploadFile) return;
+    if (!docFile) return;
     try {
-      const response = await documentsAPI.upload(uploadFile, selectedDocParts, selectedDocChildren);
+      const response = await documentsAPI.upload(docFile, selectedDocParts, selectedDocChildren);
       if (response.data.duplicate_warning) {
         setSuccess('Document uploaded (replaced existing file with same name)');
       } else {
