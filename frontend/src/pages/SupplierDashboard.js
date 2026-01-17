@@ -899,22 +899,35 @@ const SupplierDashboard = () => {
             </div>
 
             {/* Confirmation Section */}
-            {excelFile && !importResults && !showConfirmImport && (
+            {excelFile && !importResults && !showConfirmImport && !importing && (
               <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
                 <p className="text-sm text-yellow-800 font-medium mb-2">Ready to import: {excelFile.name}</p>
                 <p className="text-xs text-yellow-700">Click "Confirm Import" to proceed. Existing parts with the same SKU will be updated.</p>
               </div>
             )}
 
+            {/* Loading State */}
+            {importing && (
+              <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+                  <div>
+                    <p className="text-sm text-blue-800 font-medium">Importing data...</p>
+                    <p className="text-xs text-blue-600">Please wait while we process your file.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Confirm Dialog */}
-            {showConfirmImport && (
+            {showConfirmImport && !importing && (
               <div className="bg-orange-50 border border-orange-200 p-4 rounded-lg">
                 <p className="text-sm text-orange-800 font-medium mb-2">⚠️ Confirm Import</p>
                 <p className="text-xs text-orange-700 mb-3">Are you sure you want to import this file? This will create new parts and update existing ones with matching SKUs.</p>
                 <div className="flex gap-2">
                   <Button size="sm" variant="outline" onClick={() => setShowConfirmImport(false)}>Cancel</Button>
                   <Button size="sm" onClick={handleExcelImport} disabled={importing} className="bg-yellow-600 hover:bg-yellow-700">
-                    {importing ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Importing...</> : 'Yes, Import Now'}
+                    Yes, Import Now
                   </Button>
                 </div>
               </div>
@@ -937,7 +950,7 @@ const SupplierDashboard = () => {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowUploadExcel(false)}>Close</Button>
-            {!showConfirmImport && !importResults && (
+            {!showConfirmImport && !importResults && !importing && (
               <Button 
                 onClick={() => setShowConfirmImport(true)} 
                 disabled={!excelFile || importing} 
