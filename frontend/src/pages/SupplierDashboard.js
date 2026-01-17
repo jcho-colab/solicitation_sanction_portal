@@ -1231,19 +1231,70 @@ const SupplierDashboard = () => {
       </Dialog>
 
       {/* Manage Documents Modal */}
-      <Dialog open={showManageDocs} onOpenChange={setShowManageDocs}>
+      <Dialog open={showManageDocs} onOpenChange={(open) => { setShowManageDocs(open); if (!open) { setSelectedDocsForReassign([]); } }}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Manage Documents</DialogTitle>
-            <DialogDescription>View, rename, or delete your uploaded documents</DialogDescription>
+            <DialogDescription>
+              View, download, reassign, or delete your uploaded documents.
+              <br />
+              <span className="text-xs text-blue-600">💡 Tip: Use Ctrl/Cmd+Click or Shift+Click to select multiple documents</span>
+            </DialogDescription>
           </DialogHeader>
+          
+          {/* Selection Controls */}
+          {documents.length > 0 && (
+            <div className="flex items-center justify-between border-b pb-3 mb-3">
+              <div className="flex items-center gap-3">
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  onClick={toggleSelectAllDocs}
+                  data-testid="select-all-docs-btn"
+                >
+                  {selectedDocsForReassign.length === documents.length ? 'Deselect All' : 'Select All'}
+                </Button>
+                {selectedDocsForReassign.length > 0 && (
+                  <span className="text-sm text-gray-600">
+                    {selectedDocsForReassign.length} selected
+                  </span>
+                )}
+              </div>
+              {selectedDocsForReassign.length > 0 && (
+                <Button 
+                  size="sm" 
+                  className="bg-yellow-600 hover:bg-yellow-700"
+                  onClick={() => setShowReassignModal(true)}
+                  data-testid="reassign-docs-btn"
+                >
+                  <Edit2 className="w-4 h-4 mr-1" />
+                  Reassign Selected
+                </Button>
+              )}
+            </div>
+          )}
+
           <div className="space-y-2">
             {documents.length === 0 ? (
               <p className="text-center text-gray-500 py-8">No documents uploaded yet</p>
             ) : (
               documents.map(doc => (
-                <div key={doc.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div 
+                  key={doc.id} 
+                  className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all ${
+                    selectedDocsForReassign.includes(doc.id) 
+                      ? 'bg-yellow-100 border-2 border-yellow-400' 
+                      : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
+                  }`}
+                  onClick={(e) => toggleDocSelection(doc.id, e)}
+                  data-testid={`doc-row-${doc.id}`}
+                >
                   <div className="flex items-center gap-3">
+                    <Checkbox
+                      checked={selectedDocsForReassign.includes(doc.id)}
+                      onCheckedChange={() => toggleDocSelection(doc.id, { ctrlKey: true })}
+                      onClick={(e) => e.stopPropagation()}
+                    />
                     <FileText className="w-8 h-8 text-blue-500" />
                     <div>
                       <p className="font-medium text-sm">{doc.original_name}</p>
@@ -1254,11 +1305,24 @@ const SupplierDashboard = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex gap-2">
-                    <a href={`${API_BASE}/documents/${doc.id}/download`} target="_blank" rel="noreferrer">
-                      <Button size="sm" variant="outline"><Download className="w-4 h-4" /></Button>
-                    </a>
-                    <Button size="sm" variant="outline" className="text-red-600" onClick={() => handleDeleteDocument(doc.id)}><Trash2 className="w-4 h-4" /></Button>
+                  <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => handleDownloadDocument(doc.id, doc.original_name)}
+                      data-testid={`download-doc-${doc.id}`}
+                    >
+                      <Download className="w-4 h-4" />
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="text-red-600" 
+                      onClick={() => handleDeleteDocument(doc.id)}
+                      data-testid={`delete-doc-${doc.id}`}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
                   </div>
                 </div>
               ))
@@ -1266,6 +1330,99 @@ const SupplierDashboard = () => {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowManageDocs(false)}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Reassign Documents Modal */}
+      <Dialog open={showReassignModal} onOpenChange={setShowReassignModal}>
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Reassign Documents</DialogTitle>
+            <DialogDescription>
+              Assign {selectedDocsForReassign.length} selected document(s) to new parts/components.
+              This will replace existing assignments.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label className="mb-2 block">Assign to Parent SKUs:</Label>
+              <p className="text-xs text-blue-600 mb-2">ℹ️ Selecting a parent SKU will automatically include all its components</p>
+              <div className="max-h-32 overflow-y-auto border rounded-lg p-2 space-y-1">
+                {parts.map(part => (
+                  <div key={part.id} className="flex items-center gap-2">
+                    <Checkbox
+                      id={`reassign-part-${part.id}`}
+                      checked={reassignTargetParts.includes(part.id)}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          setReassignTargetParts([...reassignTargetParts, part.id]);
+                        } else {
+                          setReassignTargetParts(reassignTargetParts.filter(id => id !== part.id));
+                        }
+                      }}
+                    />
+                    <Label htmlFor={`reassign-part-${part.id}`} className="text-sm">
+                      {part.sku} - {part.name}
+                      <span className="text-xs text-gray-400 ml-1">({part.child_parts?.length || 0} components)</span>
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <Label className="mb-2 block">Or assign to specific Components:</Label>
+              <div className="max-h-40 overflow-y-auto border rounded-lg p-2 space-y-2">
+                {parts.map(part => (
+                  <div key={part.id}>
+                    <p className="text-xs font-medium text-gray-500 mb-1">{part.sku}</p>
+                    {part.child_parts?.map(child => (
+                      <div key={child.id} className="flex items-center gap-2 ml-4">
+                        <Checkbox
+                          id={`reassign-child-${child.id}`}
+                          checked={reassignTargetChildren.includes(child.id) || reassignTargetParts.includes(part.id)}
+                          disabled={reassignTargetParts.includes(part.id)}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              setReassignTargetChildren([...reassignTargetChildren, child.id]);
+                            } else {
+                              setReassignTargetChildren(reassignTargetChildren.filter(id => id !== child.id));
+                            }
+                          }}
+                        />
+                        <Label 
+                          htmlFor={`reassign-child-${child.id}`} 
+                          className={`text-sm ${reassignTargetParts.includes(part.id) ? 'text-gray-400' : ''}`}
+                        >
+                          {child.identifier}
+                          {reassignTargetParts.includes(part.id) && <span className="text-xs text-blue-500 ml-1">(via parent)</span>}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {reassignTargetParts.length === 0 && reassignTargetChildren.length === 0 && (
+              <Alert className="bg-amber-50 border-amber-200">
+                <AlertDescription className="text-amber-700 text-sm">
+                  ⚠️ Warning: If you don't select any parts/components, the documents will be unassigned from all items.
+                </AlertDescription>
+              </Alert>
+            )}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowReassignModal(false)}>Cancel</Button>
+            <Button 
+              onClick={handleReassignDocuments} 
+              className="bg-yellow-600 hover:bg-yellow-700"
+              data-testid="confirm-reassign-btn"
+            >
+              <Save className="w-4 h-4 mr-2" />
+              Reassign Documents
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
