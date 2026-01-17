@@ -88,6 +88,12 @@ const SupplierDashboard = () => {
   const [showEditPart, setShowEditPart] = useState(false);
   const [showManageDocs, setShowManageDocs] = useState(false);
   const [showEditDocument, setShowEditDocument] = useState(false);
+  
+  // Document reassignment states
+  const [selectedDocsForReassign, setSelectedDocsForReassign] = useState([]);
+  const [showReassignModal, setShowReassignModal] = useState(false);
+  const [reassignTargetParts, setReassignTargetParts] = useState([]);
+  const [reassignTargetChildren, setReassignTargetChildren] = useState([]);
 
   // Form states
   const [selectedPartId, setSelectedPartId] = useState(null);
