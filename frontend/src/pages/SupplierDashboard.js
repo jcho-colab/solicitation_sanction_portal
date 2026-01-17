@@ -31,15 +31,15 @@ const SupplierDashboard = () => {
   // Modals
   const [showUploadExcel, setShowUploadExcel] = useState(false);
   const [showUploadDoc, setShowUploadDoc] = useState(false);
-  const [showAddPart, setShowAddPart] = useState(false);
   const [showAddChild, setShowAddChild] = useState(false);
   const [showEditChild, setShowEditChild] = useState(false);
+  const [showEditPart, setShowEditPart] = useState(false);
   const [showManageDocs, setShowManageDocs] = useState(false);
 
   // Form states
   const [selectedPartId, setSelectedPartId] = useState(null);
+  const [selectedPart, setSelectedPart] = useState(null);
   const [selectedChild, setSelectedChild] = useState(null);
-  const [newPart, setNewPart] = useState({ sku: '', name: '', description: '', country_of_origin: '', total_weight_kg: 0, total_value_usd: 0 });
   const [newChild, setNewChild] = useState({
     identifier: '', name: '', description: '', country_of_origin: '', weight_kg: 0, value_usd: 0,
     aluminum_content_percent: 0, steel_content_percent: 0, has_russian_content: false,
