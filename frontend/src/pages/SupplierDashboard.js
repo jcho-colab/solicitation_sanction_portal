@@ -817,7 +817,10 @@ const SupplierDashboard = () => {
                 </div>
                 <div>
                   <Label>Manufacturing Method</Label>
-                  <Input value={selectedChild.manufacturing_method || ''} onChange={(e) => setSelectedChild({ ...selectedChild, manufacturing_method: e.target.value })} />
+                  <ManufacturingMethodSelect 
+                    value={selectedChild.manufacturing_method} 
+                    onChange={(value) => setSelectedChild({ ...selectedChild, manufacturing_method: value })} 
+                  />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
