@@ -642,7 +642,7 @@ const AdminDashboard = () => {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowAddSupplier(false)}>Cancel</Button>
-            <Button onClick={handleAddSupplier} className="bg-green-600 hover:bg-green-700" data-testid="save-new-supplier">Create Supplier</Button>
+            <Button onClick={handleAddSupplier} className="bg-yellow-600 hover:bg-yellow-700" data-testid="save-new-supplier">Create Supplier</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
