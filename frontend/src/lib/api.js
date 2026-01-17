@@ -75,7 +75,20 @@ export const documentsAPI = {
 
 // Import/Export APIs
 export const importExportAPI = {
-  downloadTemplate: () => `${API_BASE}/export/template`,
+  downloadTemplate: async () => {
+    const response = await api.get('/export/template', {
+      responseType: 'blob'
+    });
+    // Create download link
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'parts_template.xlsx');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  },
   importExcel: (file) => {
     const formData = new FormData();
     formData.append('file', file);
@@ -83,7 +96,20 @@ export const importExportAPI = {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   },
-  exportParts: () => `${API_BASE}/export/parts`,
+  exportParts: async () => {
+    const response = await api.get('/export/parts', {
+      responseType: 'blob'
+    });
+    // Create download link
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `parts_export_${new Date().toISOString().slice(0,10)}.xlsx`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  },
 };
 
 // Suppliers APIs (Admin only)
