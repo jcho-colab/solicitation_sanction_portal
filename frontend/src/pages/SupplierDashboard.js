@@ -403,7 +403,7 @@ const SupplierDashboard = () => {
           </Button>
         </div>
 
-        {/* Search & Add Part */}
+        {/* Search */}
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -416,9 +416,6 @@ const SupplierDashboard = () => {
               data-testid="search-input"
             />
           </div>
-          <Button onClick={() => setShowAddPart(true)} className="gap-2 bg-green-600 hover:bg-green-700" data-testid="add-part-btn">
-            <Plus className="w-4 h-4" />Add Part
-          </Button>
         </div>
 
         {/* Parts Table */}
