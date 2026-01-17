@@ -641,10 +641,9 @@ const SupplierDashboard = () => {
               </div>
               <div>
                 <Label>Country of Origin</Label>
-                <Input 
+                <CountrySelect 
                   value={selectedPart.country_of_origin || ''} 
-                  onChange={(e) => setSelectedPart({ ...selectedPart, country_of_origin: e.target.value })} 
-                  placeholder="e.g., USA" 
+                  onChange={(value) => setSelectedPart({ ...selectedPart, country_of_origin: value })} 
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -671,7 +670,7 @@ const SupplierDashboard = () => {
           )}
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowEditPart(false)}>Cancel</Button>
-            <Button onClick={handleUpdatePart} className="bg-green-600 hover:bg-green-700" data-testid="save-edit-part">
+            <Button onClick={handleUpdatePart} className="bg-yellow-600 hover:bg-yellow-700" data-testid="save-edit-part">
               <Save className="w-4 h-4 mr-2" />Save Changes
             </Button>
           </DialogFooter>
