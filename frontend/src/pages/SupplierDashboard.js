@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { partsAPI, documentsAPI, importExportAPI, API_BASE } from '../lib/api';
+import { COUNTRIES } from '../lib/countries';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -11,10 +12,29 @@ import { Alert, AlertDescription } from '../components/ui/alert';
 import { Checkbox } from '../components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import {
-  Truck, Upload, Download, Search, Plus, ChevronDown, ChevronRight,
+  Upload, Download, Search, Plus, ChevronDown, ChevronRight,
   FileText, Trash2, Copy, Save, Edit2, X, CheckCircle2, AlertTriangle,
   XCircle, LogOut, FileSpreadsheet, Loader2
 } from 'lucide-react';
+
+// BRP Logo URL
+const BRP_LOGO = 'https://customer-assets.emergentagent.com/job_de62b586-37dc-482e-9f01-b4c01458fc65/artifacts/h5zfso2l_BRP_inc_logo.svg.png';
+
+// Country Select Component
+const CountrySelect = ({ value, onChange, placeholder = "Select country", disabled = false }) => (
+  <Select value={value || ''} onValueChange={onChange} disabled={disabled}>
+    <SelectTrigger className={disabled ? 'bg-gray-100' : ''}>
+      <SelectValue placeholder={placeholder} />
+    </SelectTrigger>
+    <SelectContent className="max-h-60">
+      {COUNTRIES.map(country => (
+        <SelectItem key={country.code} value={country.code}>
+          {country.code}-{country.name}
+        </SelectItem>
+      ))}
+    </SelectContent>
+  </Select>
+);
 
 const SupplierDashboard = () => {
   const { user, logout } = useAuth();
