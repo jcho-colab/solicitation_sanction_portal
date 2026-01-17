@@ -20,6 +20,22 @@ import {
 // BRP Logo URL
 const BRP_LOGO = 'https://customer-assets.emergentagent.com/job_de62b586-37dc-482e-9f01-b4c01458fc65/artifacts/h5zfso2l_BRP_inc_logo.svg.png';
 
+// Manufacturing Methods
+const MANUFACTURING_METHODS = [
+  { value: 'Molding', label: 'Molding' },
+  { value: 'Casting', label: 'Casting' },
+  { value: 'Forging', label: 'Forging' },
+  { value: 'Stamping', label: 'Stamping' },
+  { value: 'Welding', label: 'Welding' },
+  { value: 'Machining', label: 'Machining' },
+  { value: 'CNC Machining', label: 'CNC Machining' },
+  { value: 'Extrusion', label: 'Extrusion' },
+  { value: 'Die Casting', label: 'Die Casting' },
+  { value: 'Injection Molding', label: 'Injection Molding' },
+  { value: 'Assembly', label: 'Assembly' },
+  { value: 'Other', label: 'Other' }
+];
+
 // Country Select Component
 const CountrySelect = ({ value, onChange, placeholder = "Select country", disabled = false }) => (
   <Select value={value || ''} onValueChange={onChange} disabled={disabled}>
@@ -30,6 +46,22 @@ const CountrySelect = ({ value, onChange, placeholder = "Select country", disabl
       {COUNTRIES.map(country => (
         <SelectItem key={country.code} value={country.code}>
           {country.code}-{country.name}
+        </SelectItem>
+      ))}
+    </SelectContent>
+  </Select>
+);
+
+// Manufacturing Method Select Component
+const ManufacturingMethodSelect = ({ value, onChange, disabled = false }) => (
+  <Select value={value || ''} onValueChange={onChange} disabled={disabled}>
+    <SelectTrigger className={disabled ? 'bg-gray-100' : ''}>
+      <SelectValue placeholder="Select method" />
+    </SelectTrigger>
+    <SelectContent>
+      {MANUFACTURING_METHODS.map(method => (
+        <SelectItem key={method.value} value={method.value}>
+          {method.label}
         </SelectItem>
       ))}
     </SelectContent>
