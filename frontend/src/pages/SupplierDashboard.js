@@ -445,16 +445,35 @@ const SupplierDashboard = () => {
           <Button onClick={() => setShowUploadDoc(true)} variant="outline" className="gap-2" data-testid="upload-doc-btn">
             <Upload className="w-4 h-4" />Upload Document
           </Button>
-          <a href={`${importExportAPI.downloadTemplate()}?token=${getToken()}`} target="_blank" rel="noreferrer">
-            <Button variant="outline" className="gap-2" data-testid="download-template-btn">
-              <Download className="w-4 h-4" />Download Template
-            </Button>
-          </a>
-          <a href={`${importExportAPI.exportParts()}?token=${getToken()}`} target="_blank" rel="noreferrer">
-            <Button variant="outline" className="gap-2" data-testid="export-parts-btn">
-              <Download className="w-4 h-4" />Export Parts
-            </Button>
-          </a>
+          <Button 
+            onClick={async () => {
+              try {
+                await importExportAPI.downloadTemplate();
+              } catch (err) {
+                setError('Failed to download template');
+              }
+            }} 
+            variant="outline" 
+            className="gap-2" 
+            data-testid="download-template-btn"
+          >
+            <Download className="w-4 h-4" />Download Template
+          </Button>
+          <Button 
+            onClick={async () => {
+              try {
+                await importExportAPI.exportParts();
+                setSuccess('Parts exported successfully');
+              } catch (err) {
+                setError('Failed to export parts');
+              }
+            }} 
+            variant="outline" 
+            className="gap-2" 
+            data-testid="export-parts-btn"
+          >
+            <Download className="w-4 h-4" />Export Parts
+          </Button>
           <Button onClick={() => setShowManageDocs(true)} variant="outline" className="gap-2" data-testid="manage-docs-btn">
             <FileText className="w-4 h-4" />Manage Documents
           </Button>
