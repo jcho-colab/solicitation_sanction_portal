@@ -585,7 +585,7 @@ const SupplierDashboard = () => {
                   {filteredParts.length === 0 && (
                     <tr>
                       <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
-                        No parts found. Click &quot;Add Part&quot; to create your first part.
+                        No parts found.
                       </td>
                     </tr>
                   )}
@@ -596,44 +596,66 @@ const SupplierDashboard = () => {
         </Card>
       </main>
 
-      {/* Add Part Modal */}
-      <Dialog open={showAddPart} onOpenChange={setShowAddPart}>
+      {/* Edit Part Modal */}
+      <Dialog open={showEditPart} onOpenChange={setShowEditPart}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Add New Part</DialogTitle>
-            <DialogDescription>Create a new parent SKU</DialogDescription>
+            <DialogTitle>Edit Part</DialogTitle>
+            <DialogDescription>Update part characteristics</DialogDescription>
           </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label>SKU *</Label>
-              <Input value={newPart.sku} onChange={(e) => setNewPart({ ...newPart, sku: e.target.value })} placeholder="e.g., RV-PART-001" data-testid="new-part-sku" />
-            </div>
-            <div>
-              <Label>Name *</Label>
-              <Input value={newPart.name} onChange={(e) => setNewPart({ ...newPart, name: e.target.value })} placeholder="Part name" data-testid="new-part-name" />
-            </div>
-            <div>
-              <Label>Description</Label>
-              <Input value={newPart.description} onChange={(e) => setNewPart({ ...newPart, description: e.target.value })} placeholder="Description" />
-            </div>
-            <div>
-              <Label>Country of Origin</Label>
-              <Input value={newPart.country_of_origin} onChange={(e) => setNewPart({ ...newPart, country_of_origin: e.target.value })} placeholder="e.g., USA" />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
+          {selectedPart && (
+            <div className="space-y-4">
               <div>
-                <Label>Total Weight (kg)</Label>
-                <Input type="number" step="0.01" value={newPart.total_weight_kg} onChange={(e) => setNewPart({ ...newPart, total_weight_kg: parseFloat(e.target.value) || 0 })} />
+                <Label className="text-gray-500">SKU (read-only)</Label>
+                <Input value={selectedPart.sku} disabled className="bg-gray-100" />
               </div>
               <div>
-                <Label>Total Value (USD)</Label>
-                <Input type="number" step="0.01" value={newPart.total_value_usd} onChange={(e) => setNewPart({ ...newPart, total_value_usd: parseFloat(e.target.value) || 0 })} />
+                <Label className="text-gray-500">Name (read-only)</Label>
+                <Input value={selectedPart.name} disabled className="bg-gray-100" />
+              </div>
+              <div>
+                <Label>Description</Label>
+                <Input 
+                  value={selectedPart.description || ''} 
+                  onChange={(e) => setSelectedPart({ ...selectedPart, description: e.target.value })} 
+                  placeholder="Description" 
+                />
+              </div>
+              <div>
+                <Label>Country of Origin</Label>
+                <Input 
+                  value={selectedPart.country_of_origin || ''} 
+                  onChange={(e) => setSelectedPart({ ...selectedPart, country_of_origin: e.target.value })} 
+                  placeholder="e.g., USA" 
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Total Weight (kg)</Label>
+                  <Input 
+                    type="number" 
+                    step="0.01" 
+                    value={selectedPart.total_weight_kg} 
+                    onChange={(e) => setSelectedPart({ ...selectedPart, total_weight_kg: parseFloat(e.target.value) || 0 })} 
+                  />
+                </div>
+                <div>
+                  <Label>Total Value (USD)</Label>
+                  <Input 
+                    type="number" 
+                    step="0.01" 
+                    value={selectedPart.total_value_usd} 
+                    onChange={(e) => setSelectedPart({ ...selectedPart, total_value_usd: parseFloat(e.target.value) || 0 })} 
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowAddPart(false)}>Cancel</Button>
-            <Button onClick={handleAddPart} className="bg-green-600 hover:bg-green-700" data-testid="save-new-part">Create Part</Button>
+            <Button variant="outline" onClick={() => setShowEditPart(false)}>Cancel</Button>
+            <Button onClick={handleUpdatePart} className="bg-green-600 hover:bg-green-700" data-testid="save-edit-part">
+              <Save className="w-4 h-4 mr-2" />Save Changes
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
