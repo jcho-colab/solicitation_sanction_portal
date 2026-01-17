@@ -702,7 +702,10 @@ const SupplierDashboard = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label>Country of Origin *</Label>
-                <Input value={newChild.country_of_origin} onChange={(e) => setNewChild({ ...newChild, country_of_origin: e.target.value })} placeholder="e.g., USA" />
+                <CountrySelect 
+                  value={newChild.country_of_origin} 
+                  onChange={(value) => setNewChild({ ...newChild, country_of_origin: value })} 
+                />
               </div>
               <div>
                 <Label>Manufacturing Method</Label>
@@ -754,7 +757,7 @@ const SupplierDashboard = () => {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowAddChild(false)}>Cancel</Button>
-            <Button onClick={handleAddChild} className="bg-green-600 hover:bg-green-700" data-testid="save-new-child">Add Component</Button>
+            <Button onClick={handleAddChild} className="bg-yellow-600 hover:bg-yellow-700" data-testid="save-new-child">Add Component</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -770,12 +773,12 @@ const SupplierDashboard = () => {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label>Identifier</Label>
-                  <Input value={selectedChild.identifier} onChange={(e) => setSelectedChild({ ...selectedChild, identifier: e.target.value })} />
+                  <Label className="text-gray-500">Identifier (read-only)</Label>
+                  <Input value={selectedChild.identifier} disabled className="bg-gray-100" />
                 </div>
                 <div>
-                  <Label>Name</Label>
-                  <Input value={selectedChild.name} onChange={(e) => setSelectedChild({ ...selectedChild, name: e.target.value })} />
+                  <Label className="text-gray-500">Name (read-only)</Label>
+                  <Input value={selectedChild.name} disabled className="bg-gray-100" />
                 </div>
               </div>
               <div>
@@ -785,7 +788,10 @@ const SupplierDashboard = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label>Country of Origin</Label>
-                  <Input value={selectedChild.country_of_origin} onChange={(e) => setSelectedChild({ ...selectedChild, country_of_origin: e.target.value })} />
+                  <CountrySelect 
+                    value={selectedChild.country_of_origin} 
+                    onChange={(value) => setSelectedChild({ ...selectedChild, country_of_origin: value })} 
+                  />
                 </div>
                 <div>
                   <Label>Manufacturing Method</Label>
