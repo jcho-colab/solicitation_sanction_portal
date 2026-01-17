@@ -332,7 +332,7 @@ const AdminDashboard = () => {
           <TabsContent value="suppliers" className="space-y-4">
             <div className="flex justify-between items-center">
               <h2 className="text-lg font-semibold">Manage Suppliers</h2>
-              <Button onClick={() => setShowAddSupplier(true)} className="gap-2 bg-green-600 hover:bg-green-700" data-testid="add-supplier-btn">
+              <Button onClick={() => setShowAddSupplier(true)} className="gap-2 bg-yellow-600 hover:bg-yellow-700" data-testid="add-supplier-btn">
                 <Plus className="w-4 h-4" />Add Supplier
               </Button>
             </div>
