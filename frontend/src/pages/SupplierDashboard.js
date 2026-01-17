@@ -871,7 +871,7 @@ const SupplierDashboard = () => {
       </Dialog>
 
       {/* Upload Excel Modal */}
-      <Dialog open={showUploadExcel} onOpenChange={(open) => { setShowUploadExcel(open); if (!open) { setUploadFile(null); setImportResults(null); } }}>
+      <Dialog open={showUploadExcel} onOpenChange={(open) => { setShowUploadExcel(open); if (!open) { setExcelFile(null); setImportResults(null); setShowConfirmImport(false); } }}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Import Excel File</DialogTitle>
@@ -882,27 +882,54 @@ const SupplierDashboard = () => {
               <input
                 type="file"
                 accept=".xlsx,.xls"
-                onChange={(e) => setUploadFile(e.target.files[0])}
+                onChange={(e) => {
+                  setExcelFile(e.target.files[0]);
+                  setImportResults(null);
+                  setShowConfirmImport(false);
+                }}
                 className="hidden"
                 id="excel-upload"
               />
               <label htmlFor="excel-upload" className="cursor-pointer">
                 <FileSpreadsheet className="w-12 h-12 mx-auto text-gray-400 mb-2" />
                 <p className="text-sm text-gray-600">
-                  {uploadFile ? uploadFile.name : 'Click to select or drag & drop your Excel file'}
+                  {excelFile ? excelFile.name : 'Click to select or drag & drop your Excel file'}
                 </p>
               </label>
             </div>
+
+            {/* Confirmation Section */}
+            {excelFile && !importResults && !showConfirmImport && (
+              <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
+                <p className="text-sm text-yellow-800 font-medium mb-2">Ready to import: {excelFile.name}</p>
+                <p className="text-xs text-yellow-700">Click "Confirm Import" to proceed. Existing parts with the same SKU will be updated.</p>
+              </div>
+            )}
+
+            {/* Confirm Dialog */}
+            {showConfirmImport && (
+              <div className="bg-orange-50 border border-orange-200 p-4 rounded-lg">
+                <p className="text-sm text-orange-800 font-medium mb-2">⚠️ Confirm Import</p>
+                <p className="text-xs text-orange-700 mb-3">Are you sure you want to import this file? This will create new parts and update existing ones with matching SKUs.</p>
+                <div className="flex gap-2">
+                  <Button size="sm" variant="outline" onClick={() => setShowConfirmImport(false)}>Cancel</Button>
+                  <Button size="sm" onClick={handleExcelImport} disabled={importing} className="bg-yellow-600 hover:bg-yellow-700">
+                    {importing ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Importing...</> : 'Yes, Import Now'}
+                  </Button>
+                </div>
+              </div>
+            )}
+
             {importResults && (
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="font-medium mb-2">Import Results:</p>
+              <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
+                <p className="font-medium mb-2 text-green-800">✓ Import Completed!</p>
                 <ul className="text-sm space-y-1">
-                  <li className="text-green-600">✓ {importResults.created_parents} parents created</li>
-                  <li className="text-blue-600">↻ {importResults.updated_parents} parents updated</li>
-                  <li className="text-green-600">✓ {importResults.created_children} components created</li>
-                  <li className="text-blue-600">↻ {importResults.updated_children} components updated</li>
+                  <li className="text-green-600">✓ {importResults.created_parents} parent(s) created</li>
+                  <li className="text-blue-600">↻ {importResults.updated_parents} parent(s) updated</li>
+                  <li className="text-green-600">✓ {importResults.created_children} component(s) created</li>
+                  <li className="text-blue-600">↻ {importResults.updated_children} component(s) updated</li>
                   {importResults.errors?.length > 0 && (
-                    <li className="text-red-600">✗ {importResults.errors.length} errors</li>
+                    <li className="text-red-600">✗ {importResults.errors.length} error(s): {importResults.errors.join(', ')}</li>
                   )}
                 </ul>
               </div>
@@ -910,13 +937,22 @@ const SupplierDashboard = () => {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowUploadExcel(false)}>Close</Button>
-            <Button onClick={handleExcelImport} disabled={!uploadFile} className="bg-green-600 hover:bg-green-700" data-testid="import-excel-submit"><Upload className="w-4 h-4 mr-2" />Import</Button>
+            {!showConfirmImport && !importResults && (
+              <Button 
+                onClick={() => setShowConfirmImport(true)} 
+                disabled={!excelFile || importing} 
+                className="bg-yellow-600 hover:bg-yellow-700" 
+                data-testid="import-excel-submit"
+              >
+                <Upload className="w-4 h-4 mr-2" />Confirm Import
+              </Button>
+            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {/* Upload Document Modal */}
-      <Dialog open={showUploadDoc} onOpenChange={(open) => { setShowUploadDoc(open); if (!open) { setUploadFile(null); setSelectedDocParts([]); setSelectedDocChildren([]); } }}>
+      <Dialog open={showUploadDoc} onOpenChange={(open) => { setShowUploadDoc(open); if (!open) { setDocFile(null); setSelectedDocParts([]); setSelectedDocChildren([]); } }}>
         <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Upload Document</DialogTitle>
