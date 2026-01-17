@@ -6,7 +6,10 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Alert, AlertDescription } from '../components/ui/alert';
-import { Truck, AlertCircle, Loader2 } from 'lucide-react';
+import { AlertCircle, Loader2 } from 'lucide-react';
+
+// BRP Logo URL
+const BRP_LOGO = 'https://customer-assets.emergentagent.com/job_de62b586-37dc-482e-9f01-b4c01458fc65/artifacts/h5zfso2l_BRP_inc_logo.svg.png';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -36,18 +39,18 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-orange-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-green-600 to-green-700 mb-4">
-            <Truck className="w-8 h-8 text-white" />
+          <div className="inline-flex items-center justify-center bg-black p-4 rounded-lg mb-4">
+            <img src={BRP_LOGO} alt="BRP" className="h-12 w-auto" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">RV Parts Portal</h1>
-          <p className="text-gray-600 mt-1">Recreational Vehicle Parts Management</p>
+          <h1 className="text-2xl font-bold text-white">Parts Portal</h1>
+          <p className="text-yellow-500 mt-1">Supplier Management System</p>
         </div>
 
-        <Card className="shadow-xl border-0">
+        <Card className="shadow-xl border-0 bg-white">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl text-center">Welcome Back</CardTitle>
             <CardDescription className="text-center">
