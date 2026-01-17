@@ -1026,7 +1026,7 @@ const SupplierDashboard = () => {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowUploadDoc(false)}>Cancel</Button>
-            <Button onClick={handleDocUpload} disabled={!uploadFile} className="bg-green-600 hover:bg-green-700" data-testid="upload-doc-submit"><Upload className="w-4 h-4 mr-2" />Upload</Button>
+            <Button onClick={handleDocUpload} disabled={!docFile} className="bg-yellow-600 hover:bg-yellow-700" data-testid="upload-doc-submit"><Upload className="w-4 h-4 mr-2" />Upload</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
