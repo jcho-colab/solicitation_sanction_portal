@@ -166,31 +166,29 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-green-600" />
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-yellow-600" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+    <div className="min-h-screen bg-gray-100">
+      {/* Header - BRP Branding */}
+      <header className="brp-header sticky top-0 z-40 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center">
-                <Truck className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h1 className="text-lg font-semibold text-gray-900">RV Parts Portal</h1>
-                <p className="text-xs text-gray-500">Admin Dashboard</p>
+            <div className="flex items-center gap-4">
+              <img src={BRP_LOGO} alt="BRP" className="h-10 w-auto" />
+              <div className="border-l border-gray-600 pl-4">
+                <h1 className="text-lg font-semibold text-white">Parts Portal</h1>
+                <p className="text-xs text-yellow-500">Admin Dashboard</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200">Admin</Badge>
-              <span className="text-sm text-gray-600">{user?.name}</span>
-              <Button variant="ghost" size="sm" onClick={logout} data-testid="admin-logout-btn">
+              <Badge variant="outline" className="bg-yellow-600 text-white border-yellow-500">Admin</Badge>
+              <span className="text-sm text-gray-300">{user?.name}</span>
+              <Button variant="ghost" size="sm" onClick={logout} className="text-white hover:bg-gray-700" data-testid="admin-logout-btn">
                 <LogOut className="w-4 h-4 mr-2" />Logout
               </Button>
             </div>
