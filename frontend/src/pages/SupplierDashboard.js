@@ -240,13 +240,24 @@ const SupplierDashboard = () => {
     if (!excelFile) return;
     setImporting(true);
     setShowConfirmImport(false);
+    setImportResults(null);
     try {
       const response = await importExportAPI.importExcel(excelFile);
       setImportResults(response.data);
       setSuccess(`Import completed! ${response.data.created_parents + response.data.updated_parents} parent(s) and ${response.data.created_children + response.data.updated_children} component(s) processed.`);
       fetchData();
     } catch (err) {
-      setError(err.response?.data?.detail || 'Import failed. Please check your file format.');
+      console.error('Import error:', err);
+      const errorMessage = err.response?.data?.detail || 'Import failed. Please check your file format.';
+      setError(errorMessage);
+      // Also set import results with the error for display in modal
+      setImportResults({ 
+        created_parents: 0, 
+        updated_parents: 0, 
+        created_children: 0, 
+        updated_children: 0, 
+        errors: [errorMessage] 
+      });
     } finally {
       setImporting(false);
     }
