@@ -515,28 +515,28 @@ const SupplierDashboard = () => {
                   {filteredParts.map((part) => (
                     <React.Fragment key={part.id}>
                       {/* Parent Row */}
-                      <tr className="bg-white hover:bg-gray-50 cursor-pointer" data-testid={`part-row-${part.sku}`}>
+                      <tr 
+                        className="bg-white hover:bg-yellow-50 cursor-pointer transition-colors" 
+                        data-testid={`part-row-${part.sku}`}
+                        onClick={() => toggleExpanded(part.id)}
+                      >
                         <td className="px-4 py-3">
-                          <button
-                            onClick={() => toggleExpanded(part.id)}
-                            className="flex items-center gap-2 font-medium text-gray-900"
-                          >
+                          <div className="flex items-center gap-2 font-medium text-gray-900">
                             {expandedParts[part.id] ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
                             {part.sku}
-                          </button>
+                          </div>
                         </td>
                         <td className="px-4 py-3 text-gray-700">{part.name}</td>
                         <td className="px-4 py-3 text-gray-700">{part.country_of_origin || '-'}</td>
                         <td className="px-4 py-3 text-gray-700">{part.total_weight_kg?.toFixed(2)}</td>
                         <td className="px-4 py-3 text-gray-700">${part.total_value_usd?.toFixed(2)}</td>
                         <td className="px-4 py-3">{getStatusBadge(part.status)}</td>
-                        <td className="px-4 py-3">
+                        <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                           <div className="flex gap-1">
                             <Button
                               size="sm"
                               variant="ghost"
-                              onClick={(e) => {
-                                e.stopPropagation();
+                              onClick={() => {
                                 setSelectedPart({ ...part });
                                 setShowEditPart(true);
                               }}
@@ -548,8 +548,7 @@ const SupplierDashboard = () => {
                             <Button
                               size="sm"
                               variant="ghost"
-                              onClick={(e) => {
-                                e.stopPropagation();
+                              onClick={() => {
                                 setSelectedPartId(part.id);
                                 setShowAddChild(true);
                               }}
