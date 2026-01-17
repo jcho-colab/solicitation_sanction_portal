@@ -116,15 +116,20 @@ const SupplierDashboard = () => {
     }
   };
 
-  const handleAddPart = async () => {
+  const handleUpdatePart = async () => {
     try {
-      await partsAPI.create(newPart);
-      setShowAddPart(false);
-      setNewPart({ sku: '', name: '', description: '', country_of_origin: '', total_weight_kg: 0, total_value_usd: 0 });
-      setSuccess('Part created successfully');
+      await partsAPI.update(selectedPart.id, {
+        description: selectedPart.description,
+        country_of_origin: selectedPart.country_of_origin,
+        total_weight_kg: selectedPart.total_weight_kg,
+        total_value_usd: selectedPart.total_value_usd
+      });
+      setShowEditPart(false);
+      setSelectedPart(null);
+      setSuccess('Part updated successfully');
       fetchData();
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to create part');
+      setError(err.response?.data?.detail || 'Failed to update part');
     }
   };
 
