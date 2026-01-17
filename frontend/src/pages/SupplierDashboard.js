@@ -266,7 +266,20 @@ const SupplierDashboard = () => {
   const handleDocUpload = async () => {
     if (!docFile) return;
     try {
-      const response = await documentsAPI.upload(docFile, selectedDocParts, selectedDocChildren);
+      // Auto-include all child parts of selected parent SKUs
+      let allChildIds = [...selectedDocChildren];
+      selectedDocParts.forEach(partId => {
+        const part = parts.find(p => p.id === partId);
+        if (part && part.child_parts) {
+          part.child_parts.forEach(child => {
+            if (!allChildIds.includes(child.id)) {
+              allChildIds.push(child.id);
+            }
+          });
+        }
+      });
+
+      const response = await documentsAPI.upload(docFile, selectedDocParts, allChildIds);
       if (response.data.duplicate_warning) {
         setSuccess('Document uploaded (replaced existing file with same name)');
       } else {
