@@ -963,14 +963,14 @@ const SupplierDashboard = () => {
               <input
                 type="file"
                 accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg"
-                onChange={(e) => setUploadFile(e.target.files[0])}
+                onChange={(e) => setDocFile(e.target.files[0])}
                 className="hidden"
                 id="doc-upload"
               />
               <label htmlFor="doc-upload" className="cursor-pointer">
                 <FileText className="w-12 h-12 mx-auto text-gray-400 mb-2" />
                 <p className="text-sm text-gray-600">
-                  {uploadFile ? uploadFile.name : 'Click to select your document'}
+                  {docFile ? docFile.name : 'Click to select your document'}
                 </p>
               </label>
             </div>
