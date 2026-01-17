@@ -1387,7 +1387,7 @@ const SupplierDashboard = () => {
             {reassignTargetParts.length === 0 && reassignTargetChildren.length === 0 && (
               <Alert className="bg-amber-50 border-amber-200">
                 <AlertDescription className="text-amber-700 text-sm">
-                  ⚠️ Warning: If you don't select any parts/components, the documents will be unassigned from all items.
+                  ⚠️ Warning: If you don&apos;t select any parts/components, the documents will be unassigned from all items.
                 </AlertDescription>
               </Alert>
             )}
