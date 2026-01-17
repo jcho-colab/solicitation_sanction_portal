@@ -461,7 +461,21 @@ const SupplierDashboard = () => {
                             <Button
                               size="sm"
                               variant="ghost"
-                              onClick={() => {
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedPart({ ...part });
+                                setShowEditPart(true);
+                              }}
+                              title="Edit Part"
+                              data-testid={`edit-part-${part.sku}`}
+                            >
+                              <Edit2 className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={(e) => {
+                                e.stopPropagation();
                                 setSelectedPartId(part.id);
                                 setShowAddChild(true);
                               }}
@@ -474,7 +488,10 @@ const SupplierDashboard = () => {
                               size="sm"
                               variant="ghost"
                               className="text-red-600 hover:text-red-700"
-                              onClick={() => handleDeletePart(part.id)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeletePart(part.id);
+                              }}
                               title="Delete Part"
                               data-testid={`delete-part-${part.sku}`}
                             >
