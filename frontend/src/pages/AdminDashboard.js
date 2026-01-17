@@ -389,7 +389,7 @@ const AdminDashboard = () => {
                       {suppliers.length === 0 && (
                         <tr>
                           <td colSpan="5" className="px-4 py-8 text-center text-gray-500">
-                            No suppliers yet. Click "Add Supplier" to create one.
+                            No suppliers yet. Click &quot;Add Supplier&quot; to create one.
                           </td>
                         </tr>
                       )}
