@@ -308,8 +308,6 @@ const SupplierDashboard = () => {
     return documents.filter(doc => doc.child_part_ids?.includes(childId));
   };
 
-  const getToken = () => localStorage.getItem('token');
-
   useEffect(() => {
     if (success || error) {
       const timer = setTimeout(() => {
