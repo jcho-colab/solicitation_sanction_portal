@@ -99,8 +99,11 @@ const SupplierDashboard = () => {
   });
   const [selectedDocParts, setSelectedDocParts] = useState([]);
   const [selectedDocChildren, setSelectedDocChildren] = useState([]);
-  const [uploadFile, setUploadFile] = useState(null);
+  const [excelFile, setExcelFile] = useState(null);
+  const [docFile, setDocFile] = useState(null);
   const [importResults, setImportResults] = useState(null);
+  const [importing, setImporting] = useState(false);
+  const [showConfirmImport, setShowConfirmImport] = useState(false);
 
   const fetchData = useCallback(async () => {
     try {
