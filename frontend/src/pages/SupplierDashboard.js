@@ -304,7 +304,11 @@ const SupplierDashboard = () => {
 
         {/* Stats Tiles */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <Card className="card-hover border-l-4 border-l-green-500" data-testid="stats-completed">
+          <Card 
+            className={`card-hover border-l-4 border-l-green-500 cursor-pointer transition-all ${statusFilter === 'completed' ? 'ring-2 ring-green-500 bg-green-50' : ''}`}
+            onClick={() => handleStatusFilterClick('completed')}
+            data-testid="stats-completed"
+          >
             <CardContent className="p-4">
               <div className="flex justify-between items-center">
                 <div>
@@ -313,10 +317,17 @@ const SupplierDashboard = () => {
                 </div>
                 <CheckCircle2 className="w-10 h-10 text-green-200" />
               </div>
+              {statusFilter === 'completed' && (
+                <p className="text-xs text-green-600 mt-2">Click to clear filter</p>
+              )}
             </CardContent>
           </Card>
 
-          <Card className="card-hover border-l-4 border-l-red-500" data-testid="stats-incomplete">
+          <Card 
+            className={`card-hover border-l-4 border-l-red-500 cursor-pointer transition-all ${statusFilter === 'incomplete' ? 'ring-2 ring-red-500 bg-red-50' : ''}`}
+            onClick={() => handleStatusFilterClick('incomplete')}
+            data-testid="stats-incomplete"
+          >
             <CardContent className="p-4">
               <div className="flex justify-between items-center">
                 <div>
@@ -325,10 +336,17 @@ const SupplierDashboard = () => {
                 </div>
                 <XCircle className="w-10 h-10 text-red-200" />
               </div>
+              {statusFilter === 'incomplete' && (
+                <p className="text-xs text-red-600 mt-2">Click to clear filter</p>
+              )}
             </CardContent>
           </Card>
 
-          <Card className="card-hover border-l-4 border-l-amber-500" data-testid="stats-review">
+          <Card 
+            className={`card-hover border-l-4 border-l-amber-500 cursor-pointer transition-all ${statusFilter === 'needs_review' ? 'ring-2 ring-amber-500 bg-amber-50' : ''}`}
+            onClick={() => handleStatusFilterClick('needs_review')}
+            data-testid="stats-review"
+          >
             <CardContent className="p-4">
               <div className="flex justify-between items-center">
                 <div>
@@ -337,9 +355,25 @@ const SupplierDashboard = () => {
                 </div>
                 <AlertTriangle className="w-10 h-10 text-amber-200" />
               </div>
+              {statusFilter === 'needs_review' && (
+                <p className="text-xs text-amber-600 mt-2">Click to clear filter</p>
+              )}
             </CardContent>
           </Card>
         </div>
+
+        {/* Active Filter Indicator */}
+        {statusFilter && (
+          <div className="mb-4 flex items-center gap-2">
+            <Badge variant="outline" className="gap-1">
+              Filtering by: {statusFilter === 'needs_review' ? 'Needs Review' : statusFilter.charAt(0).toUpperCase() + statusFilter.slice(1)}
+              <button onClick={() => setStatusFilter(null)} className="ml-1 hover:text-red-500">
+                <X className="w-3 h-3" />
+              </button>
+            </Badge>
+            <span className="text-sm text-gray-500">({filteredParts.length} parts)</span>
+          </div>
+        )}
 
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-3 mb-6">
