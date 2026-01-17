@@ -12,10 +12,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Switch } from '../components/ui/switch';
 import {
-  Truck, Users, Package, FileText, ClipboardList, Download,
+  Users, Package, FileText, ClipboardList, Download,
   Plus, Trash2, Edit2, LogOut, Search, CheckCircle2, AlertTriangle,
-  XCircle, Loader2, ChevronDown, ChevronRight, Eye
+  XCircle, Loader2, ChevronDown, ChevronRight
 } from 'lucide-react';
+
+// BRP Logo URL
+const BRP_LOGO = 'https://customer-assets.emergentagent.com/job_de62b586-37dc-482e-9f01-b4c01458fc65/artifacts/h5zfso2l_BRP_inc_logo.svg.png';
 
 const AdminDashboard = () => {
   const { user, logout } = useAuth();
