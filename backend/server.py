@@ -889,7 +889,7 @@ async def upload_document(
     try:
         parent_ids = json.loads(parent_part_ids)
         child_ids = json.loads(child_part_ids)
-    except:
+    except (json.JSONDecodeError, TypeError):
         parent_ids = []
         child_ids = []
     
