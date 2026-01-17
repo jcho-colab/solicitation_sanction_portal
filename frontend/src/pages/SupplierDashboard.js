@@ -87,11 +87,15 @@ const SupplierDashboard = () => {
   const [showEditChild, setShowEditChild] = useState(false);
   const [showEditPart, setShowEditPart] = useState(false);
   const [showManageDocs, setShowManageDocs] = useState(false);
+  const [showEditDocument, setShowEditDocument] = useState(false);
 
   // Form states
   const [selectedPartId, setSelectedPartId] = useState(null);
   const [selectedPart, setSelectedPart] = useState(null);
   const [selectedChild, setSelectedChild] = useState(null);
+  const [selectedDocument, setSelectedDocument] = useState(null);
+  const [editDocParts, setEditDocParts] = useState([]);
+  const [editDocChildren, setEditDocChildren] = useState([]);
   const [newChild, setNewChild] = useState({
     identifier: '', name: '', description: '', country_of_origin: '', weight_kg: 0, value_usd: 0,
     aluminum_content_percent: 0, steel_content_percent: 0, has_russian_content: false,
