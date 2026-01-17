@@ -844,7 +844,7 @@ const SupplierDashboard = () => {
           )}
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowEditChild(false)}>Cancel</Button>
-            <Button onClick={handleUpdateChild} className="bg-green-600 hover:bg-green-700" data-testid="save-edit-child"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
+            <Button onClick={handleUpdateChild} className="bg-yellow-600 hover:bg-yellow-700" data-testid="save-edit-child"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
