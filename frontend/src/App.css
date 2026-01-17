@@ -1,34 +1,32 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Additional App-specific styles */
+.rv-gradient {
+  background: linear-gradient(135deg, #166534 0%, #15803d 50%, #ea580c 100%);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+.card-hover {
+  transition: all 0.2s ease;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
-.App-link {
-    color: #61dafb;
+.table-row-hover:hover {
+  background-color: #f0fdf4;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.status-completed {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-incomplete {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.status-needs-review {
+  background-color: #fef3c7;
+  color: #d97706;
 }
