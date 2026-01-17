@@ -23,6 +23,7 @@ const SupplierDashboard = () => {
   const [documents, setDocuments] = useState([]);
   const [expandedParts, setExpandedParts] = useState({});
   const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState(null); // null = all, 'completed', 'incomplete', 'needs_review'
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
