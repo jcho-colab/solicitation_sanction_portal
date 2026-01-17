@@ -262,7 +262,7 @@ const SupplierDashboard = () => {
         setSuccess('Document uploaded successfully');
       }
       setShowUploadDoc(false);
-      setUploadFile(null);
+      setDocFile(null);
       setSelectedDocParts([]);
       setSelectedDocChildren([]);
       fetchData();
