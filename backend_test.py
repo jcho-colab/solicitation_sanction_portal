@@ -6,7 +6,7 @@ import json
 from datetime import datetime
 
 class AutomotivePartsAPITester:
-    def __init__(self, base_url="https://guidebook-3.preview.emergentagent.com"):
+    def __init__(self, base_url="https://parts-portal-2.preview.emergentagent.com"):
         self.base_url = base_url
         self.admin_token = None
         self.supplier_token = None
