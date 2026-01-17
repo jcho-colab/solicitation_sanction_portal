@@ -534,19 +534,6 @@ const SupplierDashboard = () => {
                             >
                               <Plus className="w-4 h-4" />
                             </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="text-red-600 hover:text-red-700"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleDeletePart(part.id);
-                              }}
-                              title="Delete Part"
-                              data-testid={`delete-part-${part.sku}`}
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
                           </div>
                         </td>
                       </tr>
