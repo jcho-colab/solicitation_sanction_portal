@@ -1,6 +1,10 @@
-/* Additional App-specific styles */
-.rv-gradient {
-  background: linear-gradient(135deg, #166534 0%, #15803d 50%, #ea580c 100%);
+/* BRP Brand Colors */
+.brp-gradient {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #c9a227 100%);
+}
+
+.brp-header {
+  background: linear-gradient(90deg, #1a1a1a 0%, #2d2d2d 100%);
 }
 
 .card-hover {
@@ -9,11 +13,11 @@
 
 .card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
 }
 
 .table-row-hover:hover {
-  background-color: #f0fdf4;
+  background-color: #fef9e7;
 }
 
 .status-completed {
@@ -29,4 +33,37 @@
 .status-needs-review {
   background-color: #fef3c7;
   color: #d97706;
+}
+
+/* BRP Yellow accent */
+.brp-yellow {
+  color: #c9a227;
+}
+
+.brp-yellow-bg {
+  background-color: #c9a227;
+}
+
+.brp-yellow-border {
+  border-color: #c9a227;
+}
+
+/* BRP Dark */
+.brp-dark {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.brp-dark-secondary {
+  background-color: #2d2d2d;
+}
+
+/* Button styling for BRP */
+.btn-brp-primary {
+  background-color: #c9a227;
+  color: #1a1a1a;
+}
+
+.btn-brp-primary:hover {
+  background-color: #b8932a;
 }
