@@ -686,7 +686,7 @@ const AdminDashboard = () => {
           )}
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowEditSupplier(false)}>Cancel</Button>
-            <Button onClick={handleUpdateSupplier} className="bg-green-600 hover:bg-green-700">Save Changes</Button>
+            <Button onClick={handleUpdateSupplier} className="bg-yellow-600 hover:bg-yellow-700">Save Changes</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
