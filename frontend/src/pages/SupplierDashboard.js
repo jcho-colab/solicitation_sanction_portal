@@ -185,17 +185,6 @@ const SupplierDashboard = () => {
     }
   };
 
-  const handleDeletePart = async (partId) => {
-    if (!window.confirm('Are you sure you want to delete this part?')) return;
-    try {
-      await partsAPI.delete(partId);
-      setSuccess('Part deleted successfully');
-      fetchData();
-    } catch (err) {
-      setError('Failed to delete part');
-    }
-  };
-
   const handleAddChild = async () => {
     try {
       await partsAPI.addChild(selectedPartId, newChild);
