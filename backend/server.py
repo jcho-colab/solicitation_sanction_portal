@@ -525,6 +525,8 @@ async def create_part(part_data: ParentPartCreate, current_user: dict = Depends(
         field_changes=[{"field": "sku", "new": part.sku}]
     )
     
+    # Remove MongoDB's _id before returning
+    part_dict.pop('_id', None)
     return part_dict
 
 @api_router.put("/parts/{part_id}")
