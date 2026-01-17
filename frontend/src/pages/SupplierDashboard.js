@@ -310,9 +310,111 @@ const SupplierDashboard = () => {
     try {
       await documentsAPI.delete(docId);
       setSuccess('Document deleted');
+      setSelectedDocsForReassign(prev => prev.filter(id => id !== docId));
       fetchData();
     } catch (err) {
       setError('Failed to delete document');
+    }
+  };
+
+  // Helper to download document with authentication
+  const handleDownloadDocument = async (docId, fileName) => {
+    try {
+      const response = await fetch(`${API_BASE}/documents/${docId}/download`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName || 'document');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
+      } else {
+        setError('Failed to download document');
+      }
+    } catch (err) {
+      setError('Failed to download document');
+    }
+  };
+
+  // Handle document reassignment
+  const handleReassignDocuments = async () => {
+    if (selectedDocsForReassign.length === 0) {
+      setError('Please select at least one document to reassign');
+      return;
+    }
+    try {
+      // Compute all child IDs from selected parent parts
+      let allChildIds = [...reassignTargetChildren];
+      reassignTargetParts.forEach(partId => {
+        const part = parts.find(p => p.id === partId);
+        if (part && part.child_parts) {
+          part.child_parts.forEach(child => {
+            if (!allChildIds.includes(child.id)) {
+              allChildIds.push(child.id);
+            }
+          });
+        }
+      });
+
+      // Update each selected document
+      for (const docId of selectedDocsForReassign) {
+        await documentsAPI.update(docId, {
+          parent_part_ids: reassignTargetParts,
+          child_part_ids: allChildIds
+        });
+      }
+      
+      setSuccess(`${selectedDocsForReassign.length} document(s) reassigned successfully`);
+      setShowReassignModal(false);
+      setSelectedDocsForReassign([]);
+      setReassignTargetParts([]);
+      setReassignTargetChildren([]);
+      fetchData();
+    } catch (err) {
+      setError('Failed to reassign documents');
+    }
+  };
+
+  // Toggle document selection for reassignment
+  const toggleDocSelection = (docId, event) => {
+    if (event.shiftKey && selectedDocsForReassign.length > 0) {
+      // Shift+click: select range
+      const lastSelected = selectedDocsForReassign[selectedDocsForReassign.length - 1];
+      const lastIndex = documents.findIndex(d => d.id === lastSelected);
+      const currentIndex = documents.findIndex(d => d.id === docId);
+      const [start, end] = lastIndex < currentIndex ? [lastIndex, currentIndex] : [currentIndex, lastIndex];
+      const rangeIds = documents.slice(start, end + 1).map(d => d.id);
+      setSelectedDocsForReassign(prev => [...new Set([...prev, ...rangeIds])]);
+    } else if (event.ctrlKey || event.metaKey) {
+      // Ctrl/Cmd+click: toggle single
+      setSelectedDocsForReassign(prev => 
+        prev.includes(docId) 
+          ? prev.filter(id => id !== docId)
+          : [...prev, docId]
+      );
+    } else {
+      // Regular click: toggle single
+      setSelectedDocsForReassign(prev => 
+        prev.includes(docId) 
+          ? prev.filter(id => id !== docId)
+          : [...prev, docId]
+      );
+    }
+  };
+
+  // Select/deselect all documents
+  const toggleSelectAllDocs = () => {
+    if (selectedDocsForReassign.length === documents.length) {
+      setSelectedDocsForReassign([]);
+    } else {
+      setSelectedDocsForReassign(documents.map(d => d.id));
     }
   };
 
