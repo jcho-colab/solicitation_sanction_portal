@@ -517,7 +517,7 @@ const SupplierDashboard = () => {
                   {filteredParts.length === 0 && (
                     <tr>
                       <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
-                        No parts found. Click "Add Part" to create your first part.
+                        No parts found. Click &quot;Add Part&quot; to create your first part.
                       </td>
                     </tr>
                   )}
