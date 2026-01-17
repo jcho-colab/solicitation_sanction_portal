@@ -1,0 +1,134 @@
+{
+  "timestamp": "2026-01-17T21:07:17.441692",
+  "total_tests": 18,
+  "passed_tests": 16,
+  "success_rate": 88.88888888888889,
+  "test_details": [
+    {
+      "test": "Seed Data Creation",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Admin Login",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Supplier Login",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Admin Profile (/auth/me)",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Supplier Profile (/auth/me)",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Parts Stats (Admin)",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Parts Stats (Supplier)",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Parts List (Admin)",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Parts List (Supplier)",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Suppliers List (Admin)",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Suppliers List Forbidden (Supplier)",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Audit Logs (Admin)",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Audit Logs Forbidden (Supplier)",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Create Part (Supplier)",
+      "success": false,
+      "details": "HTTP 520",
+      "expected_status": 200,
+      "actual_status": 520
+    },
+    {
+      "test": "Search Parts",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Export Template",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Invalid Login",
+      "success": true,
+      "details": "",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "test": "Unauthorized Access",
+      "success": false,
+      "details": "Not authenticated",
+      "expected_status": 401,
+      "actual_status": 403
+    }
+  ]
+}
