@@ -1056,7 +1056,7 @@ const SupplierDashboard = () => {
             {excelFile && !importResults && !showConfirmImport && !importing && (
               <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
                 <p className="text-sm text-yellow-800 font-medium mb-2">Ready to import: {excelFile.name}</p>
-                <p className="text-xs text-yellow-700">Click "Confirm Import" to proceed. Existing parts with the same SKU will be updated.</p>
+                <p className="text-xs text-yellow-700">Click &quot;Confirm Import&quot; to proceed. Existing parts with the same SKU will be updated.</p>
               </div>
             )}
 
