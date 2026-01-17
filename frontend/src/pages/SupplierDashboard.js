@@ -705,37 +705,16 @@ const SupplierDashboard = () => {
                               )}
                               {getDocumentsForChild(child.id).length > 0 && (
                                 <button
-                                  onClick={async (e) => {
+                                  onClick={(e) => {
                                     e.stopPropagation();
                                     const docs = getDocumentsForChild(child.id);
                                     if (docs.length > 0) {
-                                      try {
-                                        // Use the API with authentication
-                                        const response = await fetch(`${API_BASE}/documents/${docs[0].id}/download`, {
-                                          headers: {
-                                            'Authorization': `Bearer ${localStorage.getItem('token')}`
-                                          }
-                                        });
-                                        if (response.ok) {
-                                          const blob = await response.blob();
-                                          const url = window.URL.createObjectURL(blob);
-                                          const link = document.createElement('a');
-                                          link.href = url;
-                                          link.setAttribute('download', docs[0].original_name || 'document');
-                                          document.body.appendChild(link);
-                                          link.click();
-                                          link.remove();
-                                          window.URL.revokeObjectURL(url);
-                                        } else {
-                                          setError('Failed to download document');
-                                        }
-                                      } catch (err) {
-                                        setError('Failed to download document');
-                                      }
+                                      handleDownloadDocument(docs[0].id, docs[0].original_name);
                                     }
                                   }}
                                   className="text-blue-600 hover:text-blue-700"
-                                  title={`View Document: ${getDocumentsForChild(child.id)[0]?.original_name || 'Document'}`}
+                                  title={`Download: ${getDocumentsForChild(child.id)[0]?.original_name || 'Document'}`}
+                                  data-testid={`download-doc-child-${child.id}`}
                                 >
                                   <FileText className="w-4 h-4" />
                                 </button>
