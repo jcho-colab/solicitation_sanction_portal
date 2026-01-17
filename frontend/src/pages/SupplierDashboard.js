@@ -77,6 +77,11 @@ const SupplierDashboard = () => {
   };
 
   const filteredParts = parts.filter(part => {
+    // Apply status filter first
+    if (statusFilter && part.status !== statusFilter) {
+      return false;
+    }
+    // Then apply search filter
     if (!searchQuery) return true;
     const q = searchQuery.toLowerCase();
     return (
@@ -88,6 +93,15 @@ const SupplierDashboard = () => {
       )
     );
   });
+
+  const handleStatusFilterClick = (status) => {
+    // Toggle filter: if clicking the same filter, clear it
+    if (statusFilter === status) {
+      setStatusFilter(null);
+    } else {
+      setStatusFilter(status);
+    }
+  };
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
