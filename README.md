@@ -2,12 +2,10 @@
 
 A secure, multi-user web application for managing automotive parts data from multiple suppliers. Built for customs compliance tracking including weights, values, country of origin, and material content.
 
-![BRP Logo](https://customer-assets.emergentagent.com/job_de62b586-37dc-482e-9f01-b4c01458fc65/artifacts/h5zfso2l_BRP_inc_logo.svg.png)
-
 <img src="https://customer-assets.emergentagent.com/job_de62b586-37dc-482e-9f01-b4c01458fc65/artifacts/h5zfso2l_BRP_inc_logo.svg.png"
      alt="BRP Logo"
      width="150">
-     
+ 
 ---
 
 ## Table of Contents
